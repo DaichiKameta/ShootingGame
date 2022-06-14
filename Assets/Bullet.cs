@@ -19,9 +19,22 @@ public class Bullet : MonoBehaviour
         pos.z += 0.05f;
         //弾の移動
         transform.position = new Vector3(pos.x, pos.y, pos.z);
+
         //一定距離進んだら消滅する
         if(pos.z >= 20)
         {
+            Destroy(this.gameObject);
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        //もし当たったオブジェクトのタグがEnemyだったら
+        if(other.gameObject.tag == "Enemy")
+        {
+            //当たったオブジェクトのEnemyスクリプトを呼び出してDamage関数を実行させる
+            other.GetComponent<Enemy>().Damage();
+            //オブジェクトに当たったら弾を消す
             Destroy(this.gameObject);
         }
     }
